@@ -17,7 +17,7 @@
 
 	<properties>
 		<java.version>11</java.version>
-		<docker.image.prefix>learn</docker.image.prefix>
+		<docker.image.prefix>misha912</docker.image.prefix>
 	</properties>
 
 	<dependencies>

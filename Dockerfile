@@ -1,18 +1,4 @@
-FROM openjdk:11 as build
-
-ARG JAR_FILE
-
-COPY ${JAR_FILE} app.jar
-
-RUN mkdir -p target/dependency && (cd target/dependency; jar -xf /app.jar)
-
 FROM openjdk:11
-
-VOLUME /tmp
-
-ARG DEPENDENCY=/target/dependency
-COPY --from=build ${DEPENDENCY}/BOOT-INF/lib /app/lib
-COPY --from=build ${DEPENDENCY}/META-INF /app/META-INF
-COPY --from=build ${DEPENDENCY}/BOOT-INF/classes /app
-
-ENTRYPOINT ["java","-cp","app:app/lib/*","com.example.dockerlearn.DockerLearnApplication"]
+ARG JAR_FILE=target/*.jar
+COPY ${JAR_FILE} docker-learn-0.0.1-SNAPSHOT.jar
+ENTRYPOINT ["java","-jar","/docker-learn-0.0.1-SNAPSHOT.jar"]
