@@ -9,10 +9,15 @@ import java.util.Map;
 
 @Slf4j
 @RestController
-@RequestMapping("/health")
+@RequestMapping
 public class HealthController {
 
     @GetMapping
+    public String hello() {
+        return "Hello World!";
+    }
+
+    @GetMapping("/health")
     public Map<String, Object> getHealth() {
         log.debug("get health status");
         System.out.println("get health status");
