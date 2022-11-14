@@ -10,3 +10,8 @@
 
     docker run -d -p 8080:8000 misha912/docker-learn:0.1.1
 
+### Для запуска в кубирнетесе 
+
+В папке k8s выполнить команду:
+
+    kubectl apply -f .
