@@ -1,13 +1,15 @@
 server:
-  port : 8000
+  port: ${SERVER_PORT}
 spring:
+  application:
+    name: docker-learn
   datasource:
-    url: jdbc:postgresql://${POSTGRES_URL}/${POSTGRES_DB}
-    username: ${POSTGRES_USER}
+    url: jdbc:postgresql://${POSTGRES_URL}:${POSTGRES_PORT}/${POSTGRES_DB}
+    username: postgres
     password: ${POSTGRES_PASSWORD}
     driver-class-name: org.postgresql.Driver
   jpa:
-    database-platform: org.hibernate.dialect.PostgreSQL10Dialect
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
     generate-ddl: false
     hibernate:
       ddl-auto: none

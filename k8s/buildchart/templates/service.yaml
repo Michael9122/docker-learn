@@ -4,7 +4,7 @@ metadata:
   name: service
 spec:
   selector:
-    app: learn
+    app: docker-learn
   ports:
     - protocol: TCP
       port: {{ .Values.service.port }}
