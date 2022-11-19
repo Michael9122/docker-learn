@@ -8,7 +8,7 @@
 
 Для запуска выполнить команду:
 
-    docker run -d -p 8080:8000 misha912/docker-learn:0.1.1
+    docker run -d -p 8080:8000 misha912/docker-learn:0.2.0
 
 ### Для запуска в кубирнетесе 
 
