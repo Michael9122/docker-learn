@@ -4,9 +4,9 @@ metadata:
   name: service
 spec:
   selector:
-    app: docker-learn
+    app: learn
   ports:
     - protocol: TCP
-      port: 9000
+      port: {{ .Values.service.port }}
       targetPort: http
-  type: NodePort
+  type: {{ .Values.service.type }}
