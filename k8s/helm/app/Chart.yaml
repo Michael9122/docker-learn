@@ -1,11 +1,12 @@
 apiVersion: v2
 name: app
 description: A Helm chart for Kubernetes
+
 type: application
 
 dependencies:
   - name: postgresql
-    version: ~12.1.2
+    version: 11.6.18
     repository: https://charts.bitnami.com/bitnami
     condition: postgresql.enabled
 

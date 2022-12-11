@@ -4,14 +4,14 @@ global:
       password: password
       username: homework-user
       database: postgres
-      postgresPassword: "password"
+      postgresPassword: password
     service:
       ports:
         postgresql: "5432"
 
 secret:
   db:
-    url: task-postgresql
+    url: postgres
 
 deployment:
   image: misha912/docker-learn:0.2.1

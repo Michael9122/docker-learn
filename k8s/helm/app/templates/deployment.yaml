@@ -20,29 +20,39 @@ spec:
           ports:
             - name: http
               containerPort: {{ .Values.deployment.containerPort }}
+              protocol: TCP
+#          envFrom:
+#          - configMapRef:
+#              name: {{ include "app.fullname" . }}
+#          - secretRef:
+#              name: {{ include "app.fullname" . }}
+#          readinessProbe:
+#            httpGet:
+#              path: /health
+#              port: http
           env:
             - name: SERVER_PORT
               valueFrom:
                 configMapKeyRef:
-                  name: configmap
+                  name: {{ include "app.fullname" . }}
                   key: SERVER_PORT
             - name: POSTGRES_URL
               valueFrom:
                 secretKeyRef:
-                  name: secret
+                  name: {{ include "app.fullname" . }}
                   key: POSTGRES_URL
             - name: POSTGRES_PORT
               valueFrom:
                 secretKeyRef:
-                  name: secret
+                  name: {{ include "app.fullname" . }}
                   key: POSTGRES_PORT
             - name: POSTGRES_DB
               valueFrom:
                 secretKeyRef:
-                  name: secret
+                  name: {{ include "app.fullname" . }}
                   key: POSTGRES_DB
             - name: POSTGRES_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: secret
+                  name: {{ include "app.fullname" . }}
                   key: POSTGRES_PASSWORD
