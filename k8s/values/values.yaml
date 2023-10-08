@@ -1,0 +1,10 @@
+global:
+  postgresql:
+    auth:
+      password: password
+      username: homework-user
+      database: postgres
+      postgresPassword: password
+    service:
+      ports:
+        postgresql: "5432"
