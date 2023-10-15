@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "demo-app.fullname" . }}
+  labels:
+    {{- include "demo-app.labels" . | nindent 4 }}
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      {{- include "demo-app.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "demo-app.labels" . | nindent 8 }}
+	    {{- with .Values.podLabels }}
+          {{- toYaml . | nindent 8 }}
+        {{- end }}
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}
+          image: {{ .Values.deployment.image }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.service.port }}
+              protocol: TCP
+          env:
+            - name: POSTGRESQL_USER
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "demo-app.fullname" . }}
+                  key: POSTGRESQL_USER
+            - name: POSTGRESQL_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "demo-app.fullname" . }}
+                  key: POSTGRESQL_PASS
+            - name: POSTGRESQL_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "demo-app.fullname" . }}
+                  key: POSTGRESQL_HOST
+            - name: SERVER_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ include "demo-app.fullname" . }}
+                  key: SERVER_PORT

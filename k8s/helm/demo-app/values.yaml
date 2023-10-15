@@ -1,0 +1,47 @@
+# Default values for demo-app.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 1
+
+#global:
+#  postgresql:
+#    auth:
+#      password: password
+#      username: homework-user
+#      database: postgres
+#      postgresPassword: password
+#    service:
+#      ports:
+#        postgresql: "5432"
+
+deployment:
+  image: misha912/docker-learn:0.2.5
+  containerPort: 9000
+
+service:
+  type: NodePort
+  port: 9000
+
+secret:
+  postgresql:
+    host: postgres-postgresql.demo-app.svc.cluster.local
+    userPassword: password
+    userName: homework-user
+
+ingress:
+  enabled: true
+  className: "nginx"
+  annotations: {
+    kubernetes.io/ingress.class: "nginx",
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+  }
+  hosts:
+    - host: "arch.homework"
+      paths:
+        - path: "/otusapp/yakimenko($|/)(.*)"
+          pathType: Prefix
+          backend:
+            service:
+              port:
+                number: 9000

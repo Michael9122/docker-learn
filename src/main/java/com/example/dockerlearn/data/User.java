@@ -1,16 +1,20 @@
 package com.example.dockerlearn.data;
 
-import lombok.Data;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Entity
-@Data
+@Getter
+@Setter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "users")
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 
@@ -22,4 +26,7 @@ public class User {
 
     @Column(name = "email")
     private String email;
+
+    @Column(name = "phone")
+    private String phone;
 }

@@ -1,17 +1,23 @@
-### Сборка проекта
+### Запуск minikube, создание namespace и включение ingress
 
-Для создания образа использовать команду:
+    minikube start --vm-driver=kvm2
 
-    mvn package dockerfile:build
+    kubectl create namespace demo-app
 
-### Запуск контейнера
+    kubectl config set-context --current --namespace=demo-app
 
-Для запуска выполнить команду:
+    minikube addons enable ingress
 
-    docker run -d -p 8080:8000 misha912/docker-learn:0.2.0
+так же прописать ip и arch.homework в файл hosts 
 
-### Для запуска в кубирнетесе 
+    minikube ip - узнать айпишник миникуба
 
-В папке k8s выполнить команду:
+### Установка postgresql из helm
 
-    kubectl apply -f .
+    helm repo add bitnami https://charts.bitnami.com/bitnami
+    helm repo update
+    helm install --namespace=demo-app --values=./values/postgres-values.yaml postgres bitnami/postgresql
+
+### Запуск приложения 
+
+    helm install demo-app ./helm/demo-app

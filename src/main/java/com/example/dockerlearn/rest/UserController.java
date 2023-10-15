@@ -12,33 +12,44 @@ import java.util.List;
 
 @Slf4j
 @RestController
-@RequestMapping(path = "/user")
+@RequestMapping(path = "api/v1/user")
 public class UserController {
 
     @Autowired
     private UserRepository userRepository;
 
-    @PostMapping(path = "/create")
+    @PostMapping
     @Transactional
-    public User creatUser(User user) {
+    public User creatUser(@RequestBody User user) {
+        if (userRepository.existsByEmail(user.getEmail())) {
+            throw new RuntimeException("User with email: " + user.getEmail() + " exists");
+        }
         return userRepository.save(user);
     }
 
-    @PostMapping(path = "/delete/{id}")
+    @GetMapping(path = "/{id}")
+    @Transactional
+    public User getUser(@PathVariable Long id) {
+        return userRepository.findById(id).orElseThrow(ResourceNotFoundException::new);
+    }
+
+    @DeleteMapping(path = "/{id}")
     @Transactional
     public void deleteUser(@PathVariable Long id) {
         userRepository.deleteById(id);
     }
 
-    @GetMapping
+    @PutMapping(path = "/{id}")
     @Transactional
-    public List<User> getUser() {
-        return userRepository.findAll();
+    public User updateUser(@RequestBody User user, @PathVariable Long id) {
+        User presentUser = userRepository.findById(id).orElseThrow(ResourceNotFoundException::new);
+        user.setId(presentUser.getId());
+        return userRepository.save(user);
     }
 
-    @GetMapping(path = "/{id}")
+    @GetMapping(path = "/list")
     @Transactional
-    public User getAllUser(@PathVariable Long id) {
-        return userRepository.findById(id).orElseThrow(ResourceNotFoundException::new);
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
     }
 }
